@@ -3,18 +3,15 @@ const Flight = require("../models/Flight");
 
 const router = express.Router();
 
-
+/**
+ * Add a flight
+ */
 router.post("/add-flight", async (req, res) => {
   try {
-    const {flight_id,airline,departure_city,arrival_city,base_price} = req.body;
+    const { flight_id, airline, departure_city, arrival_city, base_price } = req.body;
 
-    
-    if (
-      !flight_id ||!airline ||!departure_city ||!arrival_city ||!base_price
-    ) {
-      return res.status(400).json({
-        error: "All flight fields are required"
-      });
+    if (!flight_id || !airline || !departure_city || !arrival_city || !base_price) {
+      return res.status(400).json({ error: "All flight fields are required" });
     }
 
     const flight = new Flight({
@@ -27,26 +24,23 @@ router.post("/add-flight", async (req, res) => {
 
     await flight.save();
 
-    return res.status(201).json({
-      message: "Flight added successfully",
-      flight
-    });
+    res.status(201).json({ message: "Flight added successfully", flight });
 
   } catch (err) {
-    return res.status(500).json({
-      error: err.message
-    });
+    res.status(500).json({ error: err.message });
   }
 });
 
-router.get("/search-flights", async (req, res) => {
+/**
+ * Search flights
+ * URL: /api/flights?from=bangalore&to=delhi
+ */
+router.get("/flights", async (req, res) => {
   try {
     const { from, to } = req.query;
 
     if (!from || !to) {
-      return res.status(400).json({
-        error: "from and to are required"
-      });
+      return res.status(400).json({ error: "from and to are required" });
     }
 
     const flights = await Flight.find({
@@ -54,12 +48,10 @@ router.get("/search-flights", async (req, res) => {
       arrival_city: to.toLowerCase()
     }).limit(10);
 
-    return res.json({ flights });
+    res.json({ flights });
 
   } catch (err) {
-    return res.status(500).json({
-      error: err.message
-    });
+    res.status(500).json({ error: err.message });
   }
 });
 
