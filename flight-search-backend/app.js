@@ -21,6 +21,11 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error(err));
 
+
+  app.get("/api", (req, res) => {
+  res.json({ status: "API is running successfully" });
+});
+
 app.use("/api", flightRoutes);
 
 const PORT = process.env.PORT || 3000;
