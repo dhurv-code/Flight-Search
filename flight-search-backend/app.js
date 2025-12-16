@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const cors = require("cors");
 
 
@@ -6,7 +8,12 @@ const mongoose = require("mongoose");
 const flightRoutes = require("./routes/flightRoutes");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://flight-search-s4ls.vercel.app"
+  ]
+}));
 app.use(express.json());
 
 mongoose
@@ -16,7 +23,7 @@ mongoose
 
 app.use("/api", flightRoutes);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

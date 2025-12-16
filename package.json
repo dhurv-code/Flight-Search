@@ -2,7 +2,7 @@
   "name": "flight-search-root",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix flight-search-backend\" \"npm run dev --prefix flight-search-frontend/flight-search-frontend\""
+    "dev": "concurrently \"npm run dev --prefix flight-search-backend\" \"npm run dev --prefix flight-search-frontend\""
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
