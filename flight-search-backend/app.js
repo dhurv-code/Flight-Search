@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect("mongodb+srv://db_user:flysky@flight-search.umfmshr.mongodb.net/?appName=flight-search")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error(err));
 
