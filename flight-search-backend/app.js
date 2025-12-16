@@ -16,10 +16,20 @@ app.use(cors({
 }));
 app.use(express.json());
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error(err));
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 5000,
+})
+.then(() => {
+  console.log("MongoDB connected");
+
+  app.listen(process.env.PORT || 3000, () => {
+    console.log("Server running");
+  });
+})
+.catch(err => {
+  console.error("Mongo connection failed:", err);
+});
+
 
 
   app.get("/api", (req, res) => {
